@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact RetroAlino{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero hero-small">
+    <div class="hero-background">
+        <img src="{% static 'images/contact-hero.jpg' %}" alt="Contact Us" class="hero-image">
+        <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">Contact Us</h1>
+            <p class="hero-subtitle">Get in touch with us for any inquiries</p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="section-padding">
+    <div class="container">
+        <div class="contact-grid">
+            <!-- Contact Form -->
+            <div class="contact-form-container">
+                <h2>Send us a Message</h2>
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                                <button class="close-btn">&times;</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <form method="post" class="contact-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="Your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <input type="text" id="subject" name="subject" required placeholder="What is this about?">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="6" required placeholder="Tell us more about your inquiry..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-info-container">
+                <h2>Get in Touch</h2>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h3>Address</h3>
+                        <p>123 Restaurant Street</p>
+                        <p>Tashkent, Uzbekistan, 100000</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h3>Phone</h3>
+                        <p>+998 90 123 45 67</p>
+                        <p>+998 71 123 45 67</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h3>Email</h3>
+                        <p>info@retroalino.com</p>
+                        <p>reservations@retroalino.com</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h3>Opening Hours</h3>
+                        <p>Monday - Sunday</p>
+                        <p>10:00 AM - 11:00 PM</p>
+                    </div>
+                </div>
+
+                <!-- Map Placeholder -->
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <p>Interactive Map</p>
+                    <p class="small-text">Google Maps integration would go here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Additional Info Section -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="section-header">
+            <h2>Visit Us Today</h2>
+            <p>We're always happy to welcome new guests and answer any questions you might have.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <h3>Call Us</h3>
+                <p>For immediate assistance</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3>Email Us</h3>
+                <p>We'll respond within 24 hours</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>Visit Us</h3>
+                <p>Come and experience our hospitality</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

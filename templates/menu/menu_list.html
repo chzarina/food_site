@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Menu{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero hero-small">
+    <div class="hero-background">
+        <img src="{% static 'images/menu-hero.jpg' %}" alt="Menu" class="hero-image">
+        <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">Our Menu</h1>
+            <p class="hero-subtitle">Discover our delicious selection of dishes</p>
+        </div>
+    </div>
+</section>
+
+<!-- Menu Section -->
+<section class="section-padding">
+    <div class="container">
+        <!-- Category Filter -->
+        <div class="category-filter">
+            <a href="{% url 'menu:menu_list' %}" class="btn btn-category {% if not active_category %}active{% endif %}">All Items</a>
+            {% for category in categories %}
+                <a href="{% url 'menu:menu_list' %}?category={{ category.slug }}" class="btn btn-category {% if active_category and active_category.slug == category.slug %}active{% endif %}">{{ category.name }}</a>
+            {% endfor %}
+        </div>
+
+        <!-- Menu Items Grid -->
+        <div class="menu-grid">
+            {% for item in menu_items %}
+            <div class="menu-card">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                {% else %}
+                    <img src="{% static 'images/menu-placeholder.jpg' %}" alt="{{ item.title }}">
+                {% endif %}
+                <div class="menu-card-content">
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.description|truncatewords:15 }}</p>
+                    <div class="menu-card-footer">
+                        <span class="price">${{ item.price }}</span>
+                        <button class="btn btn-primary btn-small">Order</button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="no-items-message">No menu items found in this category.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}RetroAlino - Best Food For Your Taste{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-background">
+        <img src="{% static 'images/hero-bg.jpg' %}" alt="Restaurant Hero" class="hero-image">
+        <div class="hero-overlay"></div>
+    </div>
+    
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">
+                Best Food For Your <span class="highlight">Taste</span>
+            </h1>
+            <p class="hero-subtitle">
+                Experience the finest dining with our delicious food and exceptional service
+            </p>
+            <div class="hero-buttons">
+                <a href="{% url 'menu:menu_list' %}" class="btn btn-primary btn-large">Order Now</a>
+                <a href="{% url 'booking:book_table' %}" class="btn btn-secondary btn-large">Book Table</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services section-padding">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our Services</h2>
+            <p>We provide exceptional dining experiences with our premium services</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Fast Service</h3>
+                <p>Quick and efficient service to satisfy your hunger</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <h3>Home Delivery</h3>
+                <p>Fresh food delivered right to your doorstep</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Quality Food</h3>
+                <p>Only the finest ingredients in every dish</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Expert Chefs</h3>
+                <p>Experienced chefs creating culinary masterpieces</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-preview section-padding">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>About RetroAlino</h2>
+                <p>RetroAlino has been serving exceptional cuisine for over 15 years. Our passion for culinary excellence and commitment to quality ingredients makes us the premier dining destination in the city.</p>
+                <p>From traditional recipes passed down through generations to innovative modern dishes, we create memorable dining experiences for every guest.</p>
+                <a href="{% url 'about' %}" class="btn btn-primary">Learn More</a>
+            </div>
+            <div class="about-image">
+                <img src="{% static 'images/about-preview.jpg' %}" alt="About RetroAlino">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Menu -->
+{% if featured_menu_items %}
+<section class="featured-menu section-padding bg-light">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured Menu</h2>
+            <p>Try our chef's special recommendations</p>
+        </div>
+
+        <div class="menu-grid">
+            {% for item in featured_menu_items %}
+            <div class="menu-card">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                {% else %}
+                    <img src="{% static 'images/menu-placeholder.jpg' %}" alt="{{ item.title }}">
+                {% endif %}
+                <div class="menu-card-content">
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.description|truncatewords:15 }}</p>
+                    <div class="menu-card-footer">
+                        <span class="price">${{ item.price }}</span>
+                        <button class="btn btn-primary btn-small">Order</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center">
+            <a href="{% url 'menu:menu_list' %}" class="btn btn-secondary">View Full Menu</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Healthy Food Section -->
+<section class="healthy-food section-padding">
+    <div class="container">
+        <div class="section-header">
+            <h2>We Provide Healthy Food</h2>
+            <p>Our commitment to health and nutrition means every dish is prepared with fresh, organic ingredients.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Fresh Ingredients</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Menu Items</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Delivery Partners -->
+<section class="delivery-partners section-padding">
+    <div class="container">
+        <div class="section-header">
+            <h2>Delivery Partners</h2>
+            <p>Order from your favorite delivery platforms</p>
+        </div>
+
+        <div class="partners-grid">
+            <div class="partner-logo">Uber Eats</div>
+            <div class="partner-logo">DoorDash</div>
+            <div class="partner-logo">Grubhub</div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+{% if testimonials %}
+<section class="testimonials section-padding bg-light">
+    <div class="container">
+        <div class="section-header">
+            <h2>What Our Customers Say</h2>
+            <p>Don't just take our word for it - hear from our satisfied customers</p>
+        </div>
+
+        <div class="testimonials-grid">
+            {% for testimonial in testimonials %}
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    {% if testimonial.image %}
+                        <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}" class="testimonial-avatar">
+                    {% else %}
+                        <img src="{% static 'images/avatar-placeholder.jpg' %}" alt="{{ testimonial.name }}" class="testimonial-avatar">
+                    {% endif %}
+                    <div class="testimonial-info">
+                        <h4>{{ testimonial.name }}</h4>
+                        <div class="rating">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= testimonial.rating %}
+                                    <i class="fas fa-star"></i>
+                                {% else %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">"{{ testimonial.review }}"</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

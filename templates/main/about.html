@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About RetroAlino{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero hero-small">
+    <div class="hero-background">
+        <img src="{% static 'images/about-hero.jpg' %}" alt="About Us" class="hero-image">
+        <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">About RetroAlino</h1>
+            <p class="hero-subtitle">Discover our story and passion for exceptional dining</p>
+        </div>
+    </div>
+</section>
+
+<!-- Our Story -->
+<section class="section-padding">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Our Story</h2>
+                <p>RetroAlino was founded in 2008 with a simple vision: to create a dining experience that combines traditional flavors with modern culinary techniques. What started as a small family restaurant has grown into one of the city's most beloved dining destinations.</p>
+                <p>Our founder, Chef Ahmad Alino, brought together recipes from his grandmother's kitchen and his formal culinary training to create a unique menu that celebrates both heritage and innovation.</p>
+                <p>Today, we continue to honor that legacy by serving exceptional food made with the finest ingredients, prepared by skilled chefs who share our passion for culinary excellence.</p>
+            </div>
+            <div class="about-image">
+                <img src="{% static 'images/our-story.jpg' %}" alt="Our Story">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics -->
+<section class="section-padding bg-highlight-dark text-white">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="text-white">Our Achievements</h2>
+            <p class="text-white">Numbers that speak for our commitment to excellence</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Years of Experience</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">10K+</div>
+                <div class="stat-label">Happy Customers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Positive Reviews</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Menu Items</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Values -->
+<section class="section-padding">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our Values</h2>
+            <p>The principles that guide everything we do at RetroAlino</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3>Passion for Food</h3>
+                <p>Every dish is prepared with love and dedication to culinary excellence</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Customer First</h3>
+                <p>Our customers are at the heart of everything we do</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h3>Quality Ingredients</h3>
+                <p>We source only the finest and freshest ingredients</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Timely Service</h3>
+                <p>Efficient service without compromising on quality</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials (from main app) -->
+{% if testimonials %}
+<section class="testimonials section-padding bg-light">
+    <div class="container">
+        <div class="section-header">
+            <h2>What Our Customers Say</h2>
+            <p>Don't just take our word for it - hear from our satisfied customers</p>
+        </div>
+
+        <div class="testimonials-grid">
+            {% for testimonial in testimonials %}
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    {% if testimonial.image %}
+                        <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}" class="testimonial-avatar">
+                    {% else %}
+                        <img src="{% static 'images/avatar-placeholder.jpg' %}" alt="{{ testimonial.name }}" class="testimonial-avatar">
+                    {% endif %}
+                    <div class="testimonial-info">
+                        <h4>{{ testimonial.name }}</h4>
+                        <div class="rating">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= testimonial.rating %}
+                                    <i class="fas fa-star"></i>
+                                {% else %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">"{{ testimonial.review }}"</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Image Gallery -->
+<section class="section-padding">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our Restaurant</h2>
+            <p>Take a look at our beautiful dining spaces and kitchen</p>
+        </div>
+
+        <div class="gallery-grid">
+            <img src="{% static 'images/gallery-1.jpg' %}" alt="Restaurant Interior 1">
+            <img src="{% static 'images/gallery-2.jpg' %}" alt="Restaurant Interior 2">
+            <img src="{% static 'images/gallery-3.jpg' %}" alt="Restaurant Interior 3">
+            <img src="{% static 'images/gallery-4.jpg' %}" alt="Restaurant Interior 4">
+            <img src="{% static 'images/gallery-5.jpg' %}" alt="Restaurant Interior 5">
+            <img src="{% static 'images/gallery-6.jpg' %}" alt="Restaurant Interior 6">
+        </div>
+    </div>
+</section>
+{% endblock %}

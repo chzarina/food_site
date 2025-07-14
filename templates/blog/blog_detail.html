@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ blog_post.title }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section (for blog detail) -->
+<section class="hero hero-small">
+    <div class="hero-background">
+        {% if blog_post.image %}
+            <img src="{{ blog_post.image.url }}" alt="{{ blog_post.title }}" class="hero-image">
+        {% else %}
+            <img src="{% static 'images/blog-detail-hero.jpg' %}" alt="{{ blog_post.title }}" class="hero-image">
+        {% endif %}
+        <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+        <div class="container">
+            <a href="{% url 'blog:blog_list' %}" class="back-to-blog"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+            <h1 class="hero-title">{{ blog_post.title }}</h1>
+            <div class="blog-meta-hero">
+                <span><i class="fas fa-calendar-alt"></i> {{ blog_post.created_at|date:"M d, Y" }}</span>
+                <span><i class="fas fa-user"></i> {{ blog_post.author }}</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Article Content -->
+<section class="section-padding blog-content-section">
+    <div class="container">
+        <article class="blog-article">
+            {{ blog_post.content|safe }} {# Use |safe if content contains HTML #}
+        </article>
+    </div>
+</section>
+
+<!-- Related Posts -->
+{% if related_posts %}
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="section-header">
+            <h2>Read More Articles</h2>
+        </div>
+
+        <div class="blog-grid">
+            {% for post in related_posts %}
+            <article class="blog-card">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-image">
+                {% else %}
+                    <img src="{% static 'images/blog-placeholder.jpg' %}" alt="{{ post.title }}" class="blog-image">
+                {% endif %}
+                <div class="blog-card-content">
+                    <h3 class="blog-title">
+                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                    </h3>
+                    <a href="{{ post.get_absolute_url }}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

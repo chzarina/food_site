@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Blog{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero hero-small">
+    <div class="hero-background">
+        <img src="{% static 'images/blog-hero.jpg' %}" alt="Blog" class="hero-image">
+        <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">Our Blog</h1>
+            <p class="hero-subtitle">Stories, recipes, and insights from our kitchen</p>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Posts -->
+<section class="section-padding">
+    <div class="container">
+        <div class="blog-grid">
+            {% for post in blog_posts %}
+            <article class="blog-card">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-image">
+                {% else %}
+                    <img src="{% static 'images/blog-placeholder.jpg' %}" alt="{{ post.title }}" class="blog-image">
+                {% endif %}
+                <div class="blog-card-content">
+                    <div class="blog-meta">
+                        <span><i class="fas fa-calendar-alt"></i> {{ post.created_at|date:"M d, Y" }}</span>
+                        <span><i class="fas fa-user"></i> {{ post.author }}</span>
+                    </div>
+                    <h2 class="blog-title">
+                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                    </h2>
+                    <p class="blog-excerpt">{{ post.excerpt }}</p>
+                    <a href="{{ post.get_absolute_url }}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            {% empty %}
+            <p class="no-items-message">No blog posts found.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
