@@ -1,18 +1,20 @@
 import os
 from pathlib import Path
+import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Asosiy yo'l
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-your-secret-key-here-change-in-production'
+# Maxfiy kalit
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-default-key")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG rejimi (faqat ishlab chiqishda True)
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["127.0.0.1"]   #".onrender.com" 127.0.0.1
+# Ruxsat etilgan hostlar
+ALLOWED_HOSTS = ["127.0.0.1", ".onrender.com"]
 
-# Application definition
+# Ilovalar
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -26,8 +28,10 @@ INSTALLED_APPS = [
     'booking',
 ]
 
+# Middleware (WhiteNoise qo‘shildi)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -56,17 +60,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'retroalino.wsgi.application'
 
-# Database
-
-import dj_database_url
-
+# Baza (Render uchun)
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3'
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600,
     )
-    }
+}
 
-# Password validation
+# Parol tekshiruvchilari
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -82,25 +84,24 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
+# Tillar va vaqt zonasi
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Tashkent'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# Statik fayllar
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # ✅ WhiteNoise uchun
 
-# Media files
+# Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Default primary key field type
+# Auto field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email settings (for contact forms)
+# Email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
